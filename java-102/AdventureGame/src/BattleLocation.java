@@ -30,15 +30,25 @@ public class BattleLocation extends Location{
         System.out.print("<A>ttack or <R>un : ");
         String selectCase = scanner.nextLine().toUpperCase();
         
-        if(selectCase.equals("A")){
-            if(combat(obsNumber)){
-                System.out.println(this.getName() + " defeat all enemies !");
-                return true;
-            }
+        if(!(selectCase.equals("A"))){
+            System.out.println("----------------");
+            System.out.println(this.getObstacle().getName() + " : HAHAHAHA...");
+            System.out.println(this.getObstacle().getName() + " : You run away like a COWARD !!");
+            System.out.println("----------------");
+            
         }
         
-        if(this.getPlayer().getHealth() < 0){
-            System.out.println("GAME OVER !");
+        if(selectCase.equals("A") && combat(obsNumber)){
+            
+            System.out.println("Defeated all enemies in the " + this.getName());
+            
+            return true;
+      
+        }
+        
+        
+        if(this.getPlayer().getHealth() <= 0){
+            System.out.println("You are dead !!");
             return false;
         }
         
@@ -71,17 +81,46 @@ public class BattleLocation extends Location{
                 }
                 
                 else{
+                    
+                    System.out.println("----------------");
+                    System.out.println(this.getObstacle().getName() + " : HAHAHAHA...");
+                    System.out.println(this.getObstacle().getName() + " : You run away like a COWARD !!");
+                    System.out.println("----------------");
+                    
                     return false;
                 }
+                
+                
+            }
+            
+            if(this.getObstacle().getHealth() < this.getPlayer().getHealth()){
+                    System.out.println("There isn't anyone !");
+                    System.out.println("You earned " + this.getObstacle().getAward() + " gold !");
+                    this.getPlayer().setCoin(this.getPlayer().getCoin() + this.getObstacle().getAward());
+                    System.out.println("New coin : " + this.getPlayer().getCoin());
+                    System.out.println("");
+                    System.out.println("");
+            }
+            
+            else{
+                return false;
             }
             
         }
         
         
-        return false;
+        
+        
+        return true;
     }
     
     public void afterHit(){
+        if(this.getPlayer().getHealth() < 0){
+            this.getPlayer().setHealth(0);
+        }
+        if(this.getObstacle().getHealth() < 0){
+            this.getObstacle().setHealth(0);
+        }
         System.out.println("Your Health : " + this.getPlayer().getHealth());
         System.out.println(this.getObstacle().getName() + "'s Health : " + this.getObstacle().getHealth());
         System.out.println("------------");

@@ -7,6 +7,7 @@ public class Player {
     
     private int damage;
     private int health;
+    private int defHealth;
     private int coin;
     private String name;
     private String charName;
@@ -37,9 +38,21 @@ public class Player {
     }
 
     public void setHealth(int health) {
+        if(health < 0){
+            health = 0;
+        }
+        
         this.health = health;
     }
 
+    public int getDefHealth() {
+        return defHealth;
+    }
+
+    public void setDefHealth(int defHealth) {
+        this.defHealth = defHealth;
+    }
+    
     public int getCoin() {
         return coin;
     }
@@ -127,6 +140,7 @@ public class Player {
     public void initPlayer(GameChar gamechar){
         this.setDamage(gamechar.getDamage());
         this.setHealth(gamechar.getHealth());
+        this.setDefHealth(gamechar.getHealth());
         this.setCoin(gamechar.getCoin());
         this.setCharName(gamechar.getCharName());
         
